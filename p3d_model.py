@@ -477,10 +477,11 @@ def get_optim_policies(model=None, modality="RGB", enable_pbn=True):
 
 if __name__ == "__main__":
 
-    model = P3D199(pretrained=True, num_classes=400)
+    model = P3D199(num_classes=400)
     model = model.cuda()
     data = torch.autograd.Variable(
-        torch.rand(10, 3, 16, 160, 160)
+        # torch.rand(10, 3, 16, 160, 160)
+        torch.rand(1, 3, 16, 160, 160)
     ).cuda()  # if modality=='Flow', please change the 2nd dimension 3==>2
     out = model(data)
-    print(out.size(), out)
+    print(out.size())
