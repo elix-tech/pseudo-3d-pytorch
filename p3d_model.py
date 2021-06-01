@@ -381,14 +381,16 @@ def P3D199(pretrained_file="", modality="RGB", **kwargs):
         #     pretrained_file = "p3d_flow_199.checkpoint.pth.tar"
         model_dict = model.state_dict()
         weights = torch.load(pretrained_file)["state_dict"]
-        pretrained_dict = {
+        weights = {
             k: v
             for (k, v), (_, vm) in zip(weights.items(), model_dict.items())
             if v.shape == vm.shape
         }
-        model_dict.update(pretrained_dict)
+        # weights = {k: v for k, v in weights.items() if k in model_dict}
+        model_dict.update(weights)
         # model.load_state_dict(weights, strict=False)
         model.load_state_dict(model_dict)
+        print("Loaded pretrained weights: ", pretrained_file)
     return model
 
 
