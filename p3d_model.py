@@ -355,7 +355,9 @@ class P3D(nn.Module):
 
         x = x.view(-1, self.fc.in_features)
         x = self.fc(self.dropout(x))
-
+        # addendum
+        x = x.view(sizes[0], -1, self.fc.out_features)
+        x = torch.sum(x, 1)
         return x
 
 
