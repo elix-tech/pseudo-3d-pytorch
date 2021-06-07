@@ -381,17 +381,8 @@ def P3D199(pretrained_file="", modality="RGB", **kwargs):
         #     pretrained_file = pretrained_path +"p3d_rgb_199.checkpoint.pth.tar"
         # elif modality == "Flow":
         #     pretrained_file = "p3d_flow_199.checkpoint.pth.tar"
-        model_dict = model.state_dict()
         weights = torch.load(pretrained_file)["state_dict"]
-        weights = {
-            k: v
-            for (k, v), (_, vm) in zip(weights.items(), model_dict.items())
-            if v.shape == vm.shape
-        }
-        # weights = {k: v for k, v in weights.items() if k in model_dict}
-        model_dict.update(weights)
-        # model.load_state_dict(weights, strict=False)
-        model.load_state_dict(model_dict)
+        model.load_state_dict(weights)  # , strict=True
         print("Loaded pretrained weights: ", pretrained_file)
     return model
 
@@ -413,7 +404,7 @@ def get_optim_policies(model=None, modality="RGB", enable_pbn=True):
     bn = []
 
     if model == None:
-        log.l.info("no model!")
+        print("no model!")
         exit()
 
     conv_cnt = 0
