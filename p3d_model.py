@@ -405,7 +405,7 @@ def get_optim_policies(model=None, modality="RGB", enable_pbn=True):
 
     if model == None:
         print("no model!")
-        exit()
+        exit(0)
 
     conv_cnt = 0
     bn_cnt = 0
